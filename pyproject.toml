@@ -1,0 +1,17 @@
+[project]
+name = "cloud_drone_api"
+version = "0.1.0"
+description = "FastAPI Cloud Drone Execution Server"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.6",
+    "pydantic>=2.10.3",
+    "httpx>=0.28.1",
+    "uvicorn>=0.33.0",
+    "mavsdk>=2.10.0",
+    "python-dotenv>=1.0.1",
+    "python-multipart>=0.0.32",
+    "qreader==3.16",
+    "numpy<2",
+]
