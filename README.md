@@ -15,7 +15,7 @@
 
 1. Terminal:
 ```sh
-cd /drone_server_prak
+cd /drone_server_thesis
 ./start_server.sh
 ```
 2. Terminal:
@@ -29,17 +29,17 @@ ngrok http 8080
   
 - First create the SQLite tables by running:
   ```sh
-  python3 /drone_server_prak/product_manager/data/db_creator.py
+  python3 /drone_server_thesis/product_manager/data/db_creator.py
   ```
 - After creating the table you can run:
   ```sh
-  python3 /drone_server_prak/product_manager/data/connect.py
+  python3 /drone_server_thesis/product_manager/data/connect.py
   ```
   for verifying the tables were created.
 
 3. Terminal:
    ```sh
-   cd /drone_server_prak/product_manager
+   cd /drone_server_thesis/product_manager
    chmod +x products_server.py
    ./products_server.py
    ```
@@ -89,11 +89,11 @@ this runs the world with the qrcodes and the equipped drone (lidar, camera, etc.
 ### PX4 setup
 
 1. Install the PX4 Repository ( see https://docs.px4.io/main/en/dev_setup/dev_env )
-2. Copy the file at /drone_server_prak/worlds_and_models/lab.sdf and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/worlds
-3. Copy the folder /drone_server_prak/worlds_and_models/qrs and paste also to the same path from before: .../PX4-Autopilot/Tools/simulation/gz/worlds
-4. Copy the folder /drone_server_prak/worlds_and_models/x500_thesis and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/models
-5. Copy the folders from ArucoTags also at /drone_server_prak/worlds_and_models/ and paste to the path: .../PX4-Autopilot/Tools/simulation/gz/models
-6. Copy the file at /drone_server_prak/worlds_and_models/4012_gz_x500_thesis and paste to this path: .../PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/
+2. Copy the file at /drone_server_thesis/worlds_and_models/lab.sdf and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/worlds
+3. Copy the folder /drone_server_thesis/worlds_and_models/qrs and paste also to the same path from before: .../PX4-Autopilot/Tools/simulation/gz/worlds
+4. Copy the folder /drone_server_thesis/worlds_and_models/x500_thesis and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/models
+5. Copy the folders from ArucoTags also at /drone_server_thesis/worlds_and_models/ and paste to the path: .../PX4-Autopilot/Tools/simulation/gz/models
+6. Copy the file at /drone_server_thesis/worlds_and_models/4012_gz_x500_thesis and paste to this path: .../PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/
 7. Inside the path .../PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/ edit the CMakeLists.txt by adding inside the 'px4_add_romfs_files' the name 4012_gz_x500_thesis
 8. For testing run the following command inside /PX4-Autopilot: make px4_sitl gz_x500_thesis_lab. You should see then the customized drone and world.
 
