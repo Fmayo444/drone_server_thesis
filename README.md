@@ -49,12 +49,24 @@ make px4_sitl gz_x500_thesis_lab
 
 this runs the world with the qrcodes and the equipped drone (lidar, camera, etc.)
 
-### Useful commands
+## PX4 setup
+
+1. Install the PX4 Repository ( see https://docs.px4.io/main/en/dev_setup/dev_env )
+2. Copy the file at /drone_server_prak/worlds_and_models/lab.sdf and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/worlds
+3. Copy the folder /drone_server_prak/worlds_and_models/qrs and paste also to the same path from before: .../PX4-Autopilot/Tools/simulation/gz/worlds
+4. Copy the folder /drone_server_prak/worlds_and_models/x500_thesis and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/models
+5. Copy the folders from ArucoTags also at /drone_server_prak/worlds_and_models/ and paste to the path: .../PX4-Autopilot/Tools/simulation/gz/models
+6. Copy the file at /drone_server_prak/worlds_and_models/4012_gz_x500_thesis and paste to this path: .../PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/
+7. Inside the path .../PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes/ edit the CMakeLists.txt by adding inside the 'px4_add_romfs_files' the name 4012_gz_x500_thesis
+8. For testing run the following command inside /PX4-Autopilot: make px4_sitl gz_x500_thesis_lab. You should see then the customized drone and world.
+
+
+## Useful commands
 
 - ros2 topics list
 - gz topic -l   # Lista de topics que se pueden agregar a ROS2, run in normal terminal
 
-#### Start the simulation
+### Start the simulation
 
 To start the simulator (and client):
 
