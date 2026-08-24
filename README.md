@@ -1,9 +1,5 @@
 # Setup documentation
 
-ROS2 Humble on an Ubuntu 24.04 Jammy docker image.
-
-Using rclpy for the drone ROS2 node. CVBridge for image processin between ROS2 and openCV. Using fastfapi for the API server.
-
 ## Start the server
 
 1. Terminal:
