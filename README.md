@@ -1,12 +1,49 @@
-# Setup documentation
+# drone_server
+....
 
-## Start the server
+## Content:
+
+- **src/** contains the source code for the RPC server, which allows the connection between the simulated drone and the cloud-based Process Engine, through several endpoints.
+- **products_manager/** contains the server and the database setup for the processing and storing product data scanned by the drone at flight time.
+- **evidence/** contains evidence of the execution of the whole system (videos and images)
+- **worlds_and_models/** contains all the files and folders for the customized simulation scenario in Gazebo (see "PX4 setup" below)
+## Setup documentation
+
+### Start the servers
+
+#### Drone server
 
 1. Terminal:
-cd my_drone_api/ -> ./start_server.sh
-
+```sh
+cd /drone_server_prak
+./start_server.sh
+```
 2. Terminal:
+```sh
 ngrok http 8080
+```
+
+#### Product manager server
+
+  Note: Install all the required python dependencies first.
+  
+- First create the SQLite tables by running:
+  ```sh
+  python3 /drone_server_prak/product_manager/data/db_creator.py
+  ```
+- After creating the table you can run:
+  ```sh
+  python3 /drone_server_prak/product_manager/data/connect.py
+  ```
+  for verifying the tables were created.
+
+3. Terminal:
+   ```sh
+   cd /drone_server_prak/product_manager
+   chmod +x products_server.py
+   ./products_server.py
+   ```
+  
 
 **If you want to test the ros2 node and see the outputs on a separate terminal, run:**
 
@@ -16,7 +53,7 @@ ngrok http 8080
 ./start_server_sin_ros_node.sh
 ```
 
-1. Terminal:
+2. Terminal:
 
 ```sh
 ros2 run ros_gz_bridge parameter_bridge \
@@ -27,19 +64,19 @@ ros2 run ros_gz_bridge parameter_bridge \
   /world/lab/model/x500_thesis_0/model/Mono_Camera_Floor/link/camera_link/sensor/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo \
 ```
 
-1. Terminal:
+3. Terminal:
 
 ```sh
 python3 src/core/ros2_node.py
 ```
 
-1. Terminal:
+4. Terminal:
 
 ```sh
 ngrok http 8080
 ```
 
-## Runing the simulation (Gazebo)
+### Runing the simulation (Gazebo)
 
 On another terminal, inside the PX4 Autopilot repo, run:
 
@@ -49,7 +86,7 @@ make px4_sitl gz_x500_thesis_lab
 
 this runs the world with the qrcodes and the equipped drone (lidar, camera, etc.)
 
-## PX4 setup
+### PX4 setup
 
 1. Install the PX4 Repository ( see https://docs.px4.io/main/en/dev_setup/dev_env )
 2. Copy the file at /drone_server_prak/worlds_and_models/lab.sdf and paste to the following path inside PX4-Repo: .../PX4-Autopilot/Tools/simulation/gz/worlds
@@ -61,7 +98,7 @@ this runs the world with the qrcodes and the equipped drone (lidar, camera, etc.
 8. For testing run the following command inside /PX4-Autopilot: make px4_sitl gz_x500_thesis_lab. You should see then the customized drone and world.
 
 
-## Useful commands
+### Useful commands
 
 - ros2 topics list
 - gz topic -l   # Lista de topics que se pueden agregar a ROS2, run in normal terminal
@@ -78,4 +115,3 @@ To start the simulator (and client):
   make px4_sitl gz_x500
   ```
 
-The agent and client are now running they should connect.
