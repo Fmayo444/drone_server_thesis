@@ -9,8 +9,21 @@
 - **worlds_and_models/** contains all the files and folders for the customized simulation scenario in Gazebo (see "PX4 setup" below)
 ## Setup documentation
 
-### Start the servers
+### Prerequisites
 
+Before running any servers, install `uv` for dependency management:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+#### Install Dependencies
+
+```sh
+uv sync
+```
+
+### Start the servers
 #### Drone server
 
 1. Terminal:
