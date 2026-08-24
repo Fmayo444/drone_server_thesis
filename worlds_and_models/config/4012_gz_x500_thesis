@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# @name x500_thesis
+# Dron para proyecto de tesis TUM
+
+
+PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
+PX4_GZ_WORLD=${PX4_GZ_WORLD:=baylands}
+PX4_SIM_MODEL=${PX4_SIM_MODEL:=x500_thesis}
+
+. ${R}etc/init.d-posix/airframes/4001_gz_x500 # It takes all the parameters from the 4001_gz_x500

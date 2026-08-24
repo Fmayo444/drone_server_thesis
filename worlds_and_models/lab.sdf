@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.9">
+  <world name="lab">
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic"/>
+    <scene>
+      <grid>false</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+    
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>500 500</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+
+    <include>
+      <name>Estanteria_industrial</name>
+      <uri>/home/fmayo8a/Desktop/PX4-Autopilot/Tools/simulation/gz/models/supermarket_rack</uri>
+      <pose>11.0 0 1.74 0 0 1.570796</pose>
+    </include>
+    
+     <!-- Productos rojos -->
+
+    <model name="producto_1_rojo">
+      <static>false</static>
+      <pose>10.62 0.15 1.05 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient> <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto1_rojo.png</albedo_map>
+                <emissive_map>qrs/Producto1_rojo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_2_rojo">
+      <static>false</static>
+      <pose>10.62 -0.24 1.05 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient> <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto2_rojo.png</albedo_map>
+                <emissive_map>qrs/Producto2_rojo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_3_rojo">
+      <static>false</static>
+      <pose>10.62 -1.17 1.50 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient> <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto3_rojo.png</albedo_map>
+                <emissive_map>qrs/Producto3_rojo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+            
+    <model name="producto_4_rojo">
+      <static>false</static>
+      <pose>10.62 -1.25 0.14 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient> <diffuse>1 0 0 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto4_rojo.png</albedo_map>
+                <emissive_map>qrs/Producto4_rojo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+     <!-- Productos azules -->
+    
+    <model name="producto_1_azul">
+      <static>false</static>
+      <pose>10.62 -0.70 1.05 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0 0.1 0.84 1</ambient> <diffuse>0 0.1 0.84 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto1_azul.png</albedo_map>
+                <emissive_map>qrs/Producto1_azul.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_2_azul">
+      <static>false</static>
+      <pose>10.62 0.85 1.50 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0 0.1 0.84 1</ambient> <diffuse>0 0.1 0.84 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto2_azul.png</albedo_map>
+                <emissive_map>qrs/Producto2_azul.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_3_azul">
+      <static>false</static>
+      <pose>10.62 -0.24 0.60 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0 0.1 0.84 1</ambient> <diffuse>0 0.1 0.84 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto3_azul.png</albedo_map>
+                <emissive_map>qrs/Producto3_azul.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+        <model name="producto_4_azul">
+      <static>false</static>
+      <pose>10.62 -0.70 0.14 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0 0.1 0.84 1</ambient> <diffuse>0 0.1 0.84 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto4_azul.png</albedo_map>
+                <emissive_map>qrs/Producto4_azul.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+        
+    <!-- Productos amarillos -->
+    
+    <model name="producto_1_amarillo">
+      <static>false</static>
+      <pose>10.62 0.85 0.14 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.85 0.15 1</ambient> <diffuse>1.0 0.85 0.15 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto1_amarillo.png</albedo_map>
+                <emissive_map>qrs/Producto1_amarillo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+        <model name="producto_2_amarillo">
+      <static>false</static>
+      <pose>10.62 -0.70 0.60 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.85 0.15 1</ambient> <diffuse>1.0 0.85 0.15 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto2_amarillo.png</albedo_map>
+                <emissive_map>qrs/Producto2_amarillo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+      <model name="producto_3_amarillo">
+      <static>false</static>
+      <pose>10.62 -1.17 1.05 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.85 0.15 1</ambient> <diffuse>1.0 0.85 0.15 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto3_amarillo.png</albedo_map>
+                <emissive_map>qrs/Producto3_amarillo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+      <model name="producto_4_amarillo">
+      <static>false</static>
+      <pose>10.62 0.39 1.50 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.85 0.15 1</ambient> <diffuse>1.0 0.85 0.15 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto4_amarillo.png</albedo_map>
+                <emissive_map>qrs/Producto4_amarillo.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    
+      <!-- Productos cafes -->
+    
+    <model name="producto_1_cafe">
+      <static>false</static>
+      <pose>10.62 0.85 0.60 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0.48 0.35 0.25 1</ambient> <diffuse>0.48 0.35 0.25 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto1_cafe.png</albedo_map>
+                <emissive_map>qrs/Producto1_cafe.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+        
+    <model name="producto_2_cafe">
+      <static>false</static>
+      <pose>10.62 0.83 1.05 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0.48 0.35 0.25 1</ambient> <diffuse>0.48 0.35 0.25 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto2_cafe.png</albedo_map>
+                <emissive_map>qrs/Producto2_cafe.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_3_cafe">
+      <static>false</static>
+      <pose>10.62 -1.22 0.60 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0.48 0.35 0.25 1</ambient> <diffuse>0.48 0.35 0.25 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto3_cafe.png</albedo_map>
+                <emissive_map>qrs/Producto3_cafe.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    <model name="producto_4_cafe">
+      <static>false</static>
+      <pose>10.62 -0.24 1.50 0 0 0</pose> 
+      <link name="caja_link">
+        <visual name="caja_visual">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size> </box>
+          </geometry>
+          <material>
+            <ambient>0.48 0.35 0.25 1</ambient> <diffuse>0.48 0.35 0.25 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="qr_code_visual">
+          <pose>-0.101 0 0 0 -1.5708 0</pose> 
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>0.15 0.15</size> </plane>
+          </geometry>
+          <material>
+            <pbr>
+              <metal>
+                <albedo_map>qrs/Producto4_cafe.png</albedo_map>
+                <emissive_map>qrs/Producto4_cafe.png</emissive_map>
+                <roughness>0.6</roughness>
+                <metalness>0.0</metalness>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        
+        <collision name="caja_collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    
+    
+
+    <light name="sunUTC" type="directional">
+      <pose>0 0 500 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>0.001 0.625 -0.78</direction>
+      <diffuse>0.904 0.904 0.904 1</diffuse>
+      <specular>0.271 0.271 0.271 1</specular>
+      <attenuation>
+        <range>2000</range>
+        <linear>0</linear>
+        <constant>1</constant>
+        <quadratic>0</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg> 8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+    
+    <include>
+      <uri>model://arucotag</uri>
+    </include>
+    
+    <!-- Centered arauco in front of shelf -->
+    <include>
+      <uri>model://arucotag_1</uri>
+    </include>
+    
+     <!-- Left arauco in front of shelf -->
+    <include>
+      <uri>model://arucotag_2</uri>
+    </include>
+    
+    <!-- Right arauco in front of shelf -->
+    <include>
+      <uri>model://arucotag_3</uri>
+    </include>
+    
+  </world>
+</sdf>

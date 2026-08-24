@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version='1.9'>
+  <model name='x500_thesis'>
+    <include merge='true'>
+      <uri>x500</uri>
+    </include>
+    
+    <!-- Front camera (OakD-Lite) -->
+    <include>
+      <uri>model://OakD-Lite</uri>
+      <name>OakD_Lite_Camera</name>
+      <pose>.12 .03 .242 0 0 0</pose>
+    </include>
+    <joint name="OakD_CameraJoint" type="fixed">
+      <parent>base_link</parent>
+      <child>OakD_Lite_Camera</child>
+      <pose relative_to="base_link">.12 .03 .242 0 0 0</pose>
+    </joint>
+    
+    <!-- Floor camera (Mono Cam) -->
+    <include>
+      <uri>model://mono_cam</uri>
+      <name>Mono_Camera_Floor</name>
+      <pose>0 0 .10 0 1.5707 0</pose>
+    </include>
+    <joint name="Mono_CameraJoint" type="fixed">
+      <parent>base_link</parent>
+      <child>Mono_Camera_Floor</child>
+      <pose relative_to="base_link">0 0 .10 0 1.5707 0</pose>
+    </joint>
+    
+    <!-- LiDAR  -->
+    <include>
+      <uri>model://lidar_2d_v2</uri>
+      <name>lidar_sensor</name>
+      <pose>.12 0 .26 0 0 0</pose> <!-- Posicionado 12cm al frente, centrado y 26cm arriba -->
+    </include>
+    <joint name="LidarJoint" type="fixed">
+      <parent>base_link</parent>
+      <child>lidar_sensor</child>
+      <pose relative_to="base_link">.12 0 .26 0 0 0</pose>
+    </joint>
+
+  </model>
+</sdf>
+
+
