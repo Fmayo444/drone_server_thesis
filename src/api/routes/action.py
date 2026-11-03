@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from typing import Dict, Any
-from src.api.models import TakeoffRequest, LandRequest, GotoRequest, MoveRelativeRequest, WebhookResponse
+from src.api.models import (
+    TakeoffRequest, LandRequest, GotoRequest, MoveRelativeRequest, WebhookResponse,
+    CallbackRequest, AlignToArucoRequest, SetFlightModeRequest, request_docs, ACTION_RESPONSES,
+)
 from src.core.task_manager import task_manager
 from src.core.connection import get_or_create_global_connector, ensure_connection
 import math
@@ -85,7 +88,7 @@ async def execute_takeoff(altitude: float) -> Dict[str, Any]:
         
     raise Exception(f"Takeoff timeout after {max_wait_time}s")
 
-@router.post("/arm", response_model=WebhookResponse, status_code=202)
+@router.post("/arm", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(CallbackRequest))
 async def arm(request: Request, response: Response):
     """Arms the drone. Supports JSON, Form-data, and CPEE Engine headers."""
     data = await parse_request_data(request)
@@ -98,11 +101,12 @@ async def arm(request: Request, response: Response):
     
     try:
         result = await execute_arm()
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/takeoff", response_model=WebhookResponse, status_code=202)
+@router.post("/takeoff", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(TakeoffRequest))
 async def takeoff(request: Request, response: Response):
     """Initiates takeoff. Supports JSON, Form-data, and CPEE Engine headers."""
     data = await parse_request_data(request)
@@ -117,6 +121,7 @@ async def takeoff(request: Request, response: Response):
     # Synchronous path if no callback
     try:
         result = await execute_takeoff(altitude)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -147,7 +152,7 @@ async def execute_land(force: bool) -> Dict[str, Any]:
         
     raise Exception("Landing timeout or not detected")
 
-@router.post("/land", response_model=WebhookResponse, status_code=202)
+@router.post("/land", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(LandRequest))
 async def land(request: Request, response: Response):
     data = await parse_request_data(request)
     force = str(data.get("force", "")).lower() in ("true", "1", "yes")
@@ -160,6 +165,7 @@ async def land(request: Request, response: Response):
     
     try:
         result = await execute_land(force)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -195,7 +201,7 @@ async def execute_go_home() -> Dict[str, Any]:
         
     return {"status": "success", "message": "Drone going home..."}
 
-@router.post("/go_home", response_model=WebhookResponse, status_code=202)
+@router.post("/go_home", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(CallbackRequest))
 async def go_home(request: Request, response: Response):
     data = await parse_request_data(request)
     callback_url = data.get("callback_url")
@@ -207,6 +213,7 @@ async def go_home(request: Request, response: Response):
     
     try:
         result = await execute_go_home()
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -236,7 +243,7 @@ async def execute_goto(req: GotoRequest) -> Dict[str, Any]:
         
     raise Exception("Goto timeout")
 
-@router.post("/goto", response_model=WebhookResponse, status_code=202)
+@router.post("/goto", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(GotoRequest))
 async def goto(request: Request, response: Response):
     data = await parse_request_data(request)
     
@@ -263,6 +270,7 @@ async def goto(request: Request, response: Response):
     
     try:
         result = await execute_goto(goto_req)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -330,7 +338,7 @@ async def execute_move_relative(req: MoveRelativeRequest) -> Dict[str, Any]:
         
     raise Exception("Move relative timeout")
 
-@router.post("/move_relative", response_model=WebhookResponse, status_code=202)
+@router.post("/move_relative", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(MoveRelativeRequest))
 async def move_relative(request: Request, response: Response):
     # north:positive for north and negative for south
     # east:positive for east and negative for west
@@ -340,9 +348,9 @@ async def move_relative(request: Request, response: Response):
 
     data = await parse_request_data(request)
 
-    north_m = data.get("north_m") or data.get("north")
-    east_m = data.get("east_m") or data.get("east") 
-    down_m = data.get("down_m") or data.get("down") 
+    north_m = data.get("north_m") if data.get("north_m") is not None else data.get("north")
+    east_m = data.get("east_m") if data.get("east_m") is not None else data.get("east")
+    down_m = data.get("down_m") if data.get("down_m") is not None else data.get("down")
     
     if north_m is None or east_m is None or down_m is None:
         print(f"ERROR: Missing parameters. Parsed data: {data}")
@@ -363,6 +371,7 @@ async def move_relative(request: Request, response: Response):
     
     try:
         result = await execute_move_relative(move_req)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -379,11 +388,10 @@ async def execute_align_to_aruco(marker_id: int | None = None) -> Dict[str, Any]
     
     print(f"         Aligning to ArUco marker {marker_id if marker_id is not None else 'closest'}...")
     
-    max_wait = 60 # Max align time
+    max_wait = 60 # Max execution time
     start_time = time.time()
     threshold_px = 30 # Pixel error threshold
     
-    # Continuous visual servoing P-controller
     while time.time() - start_time < max_wait:
         aruco_data = SENSOR_STATE.get("aruco_data")
         
@@ -423,7 +431,7 @@ async def execute_align_to_aruco(marker_id: int | None = None) -> Dict[str, Any]
             print("        Alignment successful!")
             return {"status": "success", "message": f"Successfully aligned to marker {target['id']}"}
             
-        # Alignment Phase
+        # Alignment
         try:
             position = await drone.telemetry.position().__anext__()
             current_alt = max(0.5, position.relative_altitude_m)
@@ -436,12 +444,9 @@ async def execute_align_to_aruco(marker_id: int | None = None) -> Dict[str, Any]
             continue 
             
         # Dynamic Kp scaling based on altitude.
-        # To avoid oscillation/overshoot, we use a conservative Kp (approx 0.5x true physical conversion).
-        # This creates a safe 'Look and Move' convergence.
         kp = 0.002 * current_alt
-        
-        # Floor camera mapping:
-        # err_x > 0 means marker is on the right. Move RIGHT (positive East) to center it.
+
+        # err_x > 0 means marker is on the right. Move right (positive East) to center it.
         move_east = err_x * kp
         # err_y > 0 means marker is on the bottom. Move BACKWARDS (negative North) to center it.
         move_north = -err_y * kp
@@ -479,7 +484,7 @@ async def execute_align_to_aruco(marker_id: int | None = None) -> Dict[str, Any]
         
     raise Exception("ArUco alignment timeout (marker lost or could not stabilize)")
 
-@router.post("/align_to_aruco", response_model=WebhookResponse, status_code=202)
+@router.post("/align_to_aruco", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(AlignToArucoRequest))
 async def align_to_aruco(request: Request, response: Response):
     """Aligns the drone directly over an ArUco marker using the floor camera."""
     data = await parse_request_data(request)
@@ -497,6 +502,7 @@ async def align_to_aruco(request: Request, response: Response):
     
     try:
         result = await execute_align_to_aruco(marker_id)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -574,7 +580,7 @@ async def execute_set_flight_mode(flight_mode: str) -> Dict[str, Any]:
 
 
 # NEED TEST
-@router.post("/set_flight_mode", response_model=WebhookResponse, status_code=202)
+@router.post("/set_flight_mode", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(SetFlightModeRequest))
 async def set_flight_mode(request: Request, response: Response):
     data = await parse_request_data(request)
     
@@ -591,6 +597,7 @@ async def set_flight_mode(request: Request, response: Response):
     
     try:
         result = await execute_set_flight_mode(flight_mode)
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -625,7 +632,7 @@ async def execute_disarm() -> Dict[str, Any]:
         
     return {"status": "success", "message": "Drone disarmed successfully"}
 
-@router.post("/disarm", response_model=WebhookResponse, status_code=202)
+@router.post("/disarm", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(CallbackRequest))
 async def disarm(request: Request, response: Response):
     """Disarms the drone, but only if it is on the ground."""
     data = await parse_request_data(request)
@@ -638,6 +645,7 @@ async def disarm(request: Request, response: Response):
     
     try:
         result = await execute_disarm()
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except HTTPException as e:
         raise e
@@ -672,7 +680,7 @@ async def execute_return_to_launch() -> Dict[str, Any]:
         
     raise Exception("Return to launch timeout or landing not detected")
     
-@router.post("/return_to_launch", response_model=WebhookResponse, status_code=202)
+@router.post("/return_to_launch", response_model=WebhookResponse, status_code=202, responses=ACTION_RESPONSES, openapi_extra=request_docs(CallbackRequest))
 async def return_to_launch(request: Request, response: Response):
     """Commands the drone to return to its launch position and land."""
     data = await parse_request_data(request)
@@ -684,6 +692,7 @@ async def return_to_launch(request: Request, response: Response):
     
     try:
         result = await execute_return_to_launch()
+        response.status_code = 200
         return WebhookResponse(status="success", task_id="sync", message=str(result))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
